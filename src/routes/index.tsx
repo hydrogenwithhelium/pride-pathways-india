@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Shield, Scale, Calendar, Ban, Heart, ArrowRight } from "lucide-react";
+import { Shield, Scale, Calendar, Ban, Heart, ArrowRight, Trophy, Vote } from "lucide-react";
+import winnerAvatar from "@/assets/winner-avatar.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -43,7 +44,8 @@ function Nav() {
           <a href="#home" className="text-pink border-b-2 border-pink pb-1">HOME</a>
           <a href="#about">ABOUT</a>
           <a href="#apart">WHY US</a>
-          <a href="#contact">CONTACT</a>
+          <a href="#hall">HALL</a>
+          <a href="#timeline">TIMELINE</a>
         </nav>
         <a href="#join" className="border-brut bg-pink text-white font-display px-5 py-3 shadow-brut-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2 text-sm">
           <Heart className="w-4 h-4" /> JOIN US
@@ -77,17 +79,13 @@ function Hero() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-5 mt-12">
-          <a href="#join" className="border-brut bg-pink text-white font-display px-8 py-4 shadow-brut-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all text-center">
-            SECURE YOUR SPOT
-          </a>
-          <a href="#apart" className="border-brut bg-cyan text-navy font-display px-8 py-4 shadow-brut-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all text-center">
+        <div className="flex justify-center mt-12">
+          <a href="#apart" className="border-brut bg-pink text-white font-display px-8 py-4 shadow-brut-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all text-center">
             EXPLORE THE COMMUNITY
           </a>
         </div>
       </div>
 
-      {/* Cloud-like decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-cream/40 to-transparent" />
     </section>
   );
@@ -102,7 +100,7 @@ function About() {
             COMMUNIQUÉ — 01
           </div>
           <div className="flex-1 h-[2px] bg-navy/30 min-w-12" />
-          <div className="font-mono-ui text-xs font-bold text-muted-foreground">NEW DELHI, INDIA · 2026</div>
+          <div className="font-mono-ui text-xs font-bold text-muted-foreground">INDIA · 2026</div>
         </div>
 
         <div className="relative inline-block mb-12">
@@ -152,10 +150,10 @@ const PILLARS = [
   },
   {
     icon: Calendar,
-    title: "EVENTS & MEETUPS",
+    title: "OUR EVENTS",
     bg: "bg-cream",
     text: "text-navy",
-    body: "We host workshops, career-prep sessions, study circles for NEET/JEE/UPSC aspirants, mental-health roundtables, allyship trainings, Pride-month programming and IRL meetups across Indian cities. Every event is curated for psychological safety, accessibility, and genuine value — no performative panels, no rainbow-washing, just programming that delegates, students and professionals actually want to show up to.",
+    body: "We host workshops, career-prep sessions, study circles for NEET/JEE/UPSC aspirants, mental-health roundtables, allyship trainings and Pride-month programming — every event curated for psychological safety, accessibility and genuine value. Our flagship community ritual is the GayNEETards 2025 MOD-Admin Election: a transparent, member-driven vote where the community itself nominates, debates and elects the moderators and admins who steward our spaces for the year ahead. No appointments from above, no quiet hand-picking — just a clean, public ballot that keeps leadership accountable to the people it serves.",
   },
   {
     icon: Shield,
@@ -186,6 +184,97 @@ function Apart() {
               <div className={`w-16 h-1 mt-6 ${text === "text-white" ? "bg-white" : "bg-navy"}`} />
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HallOfFame() {
+  return (
+    <section id="hall" className="bg-cream border-b-[3px] border-navy py-24">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="flex items-center gap-6 mb-14">
+          <div className="border-brut bg-yellow px-4 py-2 font-mono-ui text-xs font-bold text-navy flex items-center gap-2">
+            <Trophy className="w-4 h-4" /> HALL OF FAME
+          </div>
+          <div className="flex-1 h-[3px] bg-navy" />
+        </div>
+
+        <h2 className="font-display text-navy text-4xl md:text-6xl leading-[0.9] mb-12">
+          MOD-ADMIN ELECTION<br/>
+          <span className="bg-pink text-white px-3 inline-block mt-2">WINNER 🏆</span>
+        </h2>
+
+        <div className="flex justify-center">
+          <div className="relative max-w-md w-full">
+            <div className="absolute -bottom-2 -right-2 w-full h-full bg-navy"></div>
+            <div className="relative bg-yellow border-brut p-10 text-center">
+              <div className="font-mono-ui text-xs font-bold text-navy mb-6">● MOD-ADMIN ELECTION WINNER 2025</div>
+              <div className="flex justify-center mb-6">
+                <div className="border-brut bg-cream p-4 shadow-brut-sm">
+                  <img
+                    src={winnerAvatar}
+                    alt="MOD-Admin Election Winner 2025 avatar"
+                    width={160}
+                    height={160}
+                    loading="lazy"
+                    className="w-40 h-40 object-contain"
+                  />
+                </div>
+              </div>
+              <div className="w-16 h-1 bg-navy mx-auto mb-4" />
+              <h3 className="font-display text-navy text-4xl md:text-5xl">Soanpapdi</h3>
+              <p className="font-mono-ui text-xs text-navy/70 mt-3">ELECTED · GAYNEETARDS · 2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const TIMELINE = [
+  { date: "JUN 2025", title: "GayNEETards Born", body: "The first spark — GayNEETards is created as a safe corner for queer NEET aspirants navigating coaching, hostels and exam pressure." },
+  { date: "AUG 2025", title: "LGBTards on Telegram", body: "The community widens — the LGBTards Telegram group is launched as an open hub for LGBTQIA+ students and professionals across India." },
+  { date: "OCT 2025", title: "LGBTards Founded", body: "LGBTards is formally established as the parent network — bringing GayNEETards and future chapters under one roof." },
+  { date: "2026 · TBD", title: "MOD-Admin Election", body: "The next MOD-Admin Election is on the horizon. Date to be announced — leadership stays in the community's hands." },
+];
+
+function Timeline() {
+  return (
+    <section id="timeline" className="bg-navy py-24 border-b-[3px] border-navy overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex items-center gap-6 mb-16">
+          <h2 className="font-display text-cream text-2xl md:text-3xl whitespace-nowrap">
+            EVENT <span className="text-yellow">TIMELINE</span>
+          </h2>
+          <div className="flex-1 h-[3px] bg-cream" />
+        </div>
+
+        <div className="relative">
+          {/* Track line */}
+          <div className="absolute left-0 right-0 top-10 h-[6px] bg-cream/20 border-y-2 border-cream/30 hidden md:block" />
+          {/* Animated train */}
+          <div className="absolute top-[18px] hidden md:block train-anim z-10">
+            <div className="border-brut bg-pink text-white font-mono-ui text-[10px] font-bold px-3 py-1 shadow-brut-sm">
+              🚂 LGBTards EXPRESS
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8 relative pt-20 md:pt-24">
+            {TIMELINE.map((item, i) => (
+              <div key={i} className="relative">
+                {/* Station dot */}
+                <div className="hidden md:block absolute -top-[58px] left-1/2 -translate-x-1/2 w-6 h-6 border-brut bg-yellow rounded-full" />
+                <div className="border-brut bg-cream p-5 shadow-brut h-full">
+                  <div className="font-mono-ui text-[11px] font-bold text-pink mb-2">{item.date}</div>
+                  <h3 className="font-display text-navy text-lg mb-3">{item.title}</h3>
+                  <p className="text-navy/80 text-sm leading-relaxed">{item.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -229,6 +318,8 @@ function Footer() {
           <ul className="space-y-2 text-sm">
             <li><a href="#about" className="hover:text-pink">About</a></li>
             <li><a href="#apart" className="hover:text-pink">Why Us</a></li>
+            <li><a href="#hall" className="hover:text-pink">Hall of Fame</a></li>
+            <li><a href="#timeline" className="hover:text-pink">Timeline</a></li>
             <li><a href="#join" className="hover:text-pink">Join</a></li>
           </ul>
         </div>
@@ -247,6 +338,8 @@ function Footer() {
 }
 
 function Index() {
+  // Suppress unused-import warnings for icons used only for semantic clarity
+  void Vote;
   return (
     <main className="min-h-screen bg-cream">
       <Ticker />
@@ -254,6 +347,8 @@ function Index() {
       <Hero />
       <About />
       <Apart />
+      <HallOfFame />
+      <Timeline />
       <CTA />
       <Footer />
     </main>
