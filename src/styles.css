@@ -92,4 +92,11 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+  .train-anim {
+    animation: train 9s linear infinite;
+  }
+  @keyframes train {
+    0% { left: -15%; }
+    100% { left: 105%; }
+  }
 }
