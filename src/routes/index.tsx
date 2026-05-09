@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Shield, Scale, Calendar, Ban, Heart, ArrowRight, Trophy, Vote } from "lucide-react";
+import { Shield, Scale, Calendar, Ban, Heart, ArrowRight, Trophy, Vote, Send } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import winnerAvatar from "@/assets/winner-avatar.png";
+import { submitContact } from "@/lib/contact.functions";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -237,8 +240,9 @@ function HallOfFame() {
 const TIMELINE = [
   { date: "JUN 2025", title: "GayNEETards Born", body: "The first spark — GayNEETards is created as a safe corner for queer NEET aspirants navigating coaching, hostels and exam pressure." },
   { date: "AUG 2025", title: "LGBTards on Telegram", body: "The community widens — the LGBTards Telegram group is launched as an open hub for LGBTQIA+ students and professionals across India." },
+  { date: "SEP 2025", title: "MOD-Admin Election 2025", body: "The community holds its first ever MOD-Admin Election — a transparent, member-driven ballot that puts moderation power directly in the hands of the people who use the space." },
   { date: "OCT 2025", title: "LGBTards Founded", body: "LGBTards is formally established as the parent network — bringing GayNEETards and future chapters under one roof." },
-  { date: "2026 · TBD", title: "MOD-Admin Election", body: "The next MOD-Admin Election is on the horizon. Date to be announced — leadership stays in the community's hands." },
+  { date: "2026 · TBD", title: "Next MOD-Admin Election", body: "The next MOD-Admin Election is on the horizon. Date to be announced — leadership stays in the community's hands." },
 ];
 
 function Timeline() {
@@ -253,19 +257,16 @@ function Timeline() {
         </div>
 
         <div className="relative">
-          {/* Track line */}
           <div className="absolute left-0 right-0 top-10 h-[6px] bg-cream/20 border-y-2 border-cream/30 hidden md:block" />
-          {/* Animated train */}
           <div className="absolute top-[18px] hidden md:block train-anim z-10">
             <div className="border-brut bg-pink text-white font-mono-ui text-[10px] font-bold px-3 py-1 shadow-brut-sm">
               🚂 LGBTards EXPRESS
             </div>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8 relative pt-20 md:pt-24">
+          <div className="grid md:grid-cols-5 gap-6 relative pt-20 md:pt-24">
             {TIMELINE.map((item, i) => (
               <div key={i} className="relative">
-                {/* Station dot */}
                 <div className="hidden md:block absolute -top-[58px] left-1/2 -translate-x-1/2 w-6 h-6 border-brut bg-yellow rounded-full" />
                 <div className="border-brut bg-cream p-5 shadow-brut h-full">
                   <div className="font-mono-ui text-[11px] font-bold text-pink mb-2">{item.date}</div>
@@ -293,13 +294,115 @@ function CTA() {
           <span className="bg-pink text-white px-3 inline-block mt-2">WISHED EXISTED.</span>
         </h2>
         <p className="text-navy text-lg max-w-2xl mx-auto mb-10">
-          Join LGBTards — get guidance, get heard, get supported. Founding members are permanent. Your name is part of the first chapter.
+          Two doors. One community. Step into the subreddit that fits you — or join both.
         </p>
-        <a href="#" className="inline-flex items-center gap-3 border-brut bg-navy text-yellow font-display px-8 py-5 shadow-brut hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all">
-          REGISTER NOW <ArrowRight className="w-5 h-5" />
-        </a>
+        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+          <a
+            href="https://www.reddit.com/r/LGBTards/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 border-brut bg-navy text-yellow font-display px-8 py-5 shadow-brut hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all w-full sm:w-auto justify-center"
+          >
+            r/LGBTards <ArrowRight className="w-5 h-5" />
+          </a>
+          <a
+            href="https://www.reddit.com/r/GayNEETards/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 border-brut bg-pink text-white font-display px-8 py-5 shadow-brut hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none transition-all w-full sm:w-auto justify-center"
+          >
+            r/GayNEETards <ArrowRight className="w-5 h-5" />
+          </a>
+        </div>
       </div>
     </section>
+  );
+}
+
+function ContactForm() {
+  const submit = useServerFn(submitContact);
+  const [userId, setUserId] = useState("");
+  const [concern, setConcern] = useState("");
+  const [ageRange, setAgeRange] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+    try {
+      await submit({ data: { userId, concern, ageRange } });
+      setStatus("success");
+      setUserId("");
+      setConcern("");
+      setAgeRange("");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="bg-cream border-brut p-5 shadow-brut-sm space-y-3 text-navy">
+      <div>
+        <label className="font-mono-ui text-[10px] font-bold block mb-1">USER ID · ANY PLATFORM</label>
+        <input
+          required
+          maxLength={200}
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+          placeholder="@yourhandle / discord / telegram / email"
+          className="w-full border-2 border-navy bg-white px-3 py-2 text-sm font-mono-ui focus:outline-none focus:border-pink"
+        />
+      </div>
+      <div>
+        <label className="font-mono-ui text-[10px] font-bold block mb-1">CONCERN</label>
+        <textarea
+          required
+          maxLength={2000}
+          rows={3}
+          value={concern}
+          onChange={(e) => setConcern(e.target.value)}
+          placeholder="Tell us what's going on — we read every message."
+          className="w-full border-2 border-navy bg-white px-3 py-2 text-sm focus:outline-none focus:border-pink resize-none"
+        />
+      </div>
+      <div>
+        <label className="font-mono-ui text-[10px] font-bold block mb-1">AGE RANGE</label>
+        <select
+          required
+          value={ageRange}
+          onChange={(e) => setAgeRange(e.target.value)}
+          className="w-full border-2 border-navy bg-white px-3 py-2 text-sm font-mono-ui focus:outline-none focus:border-pink"
+        >
+          <option value="">Select…</option>
+          <option value="Under 18">Under 18</option>
+          <option value="18-24">18–24</option>
+          <option value="25-34">25–34</option>
+          <option value="35-44">35–44</option>
+          <option value="45+">45+</option>
+        </select>
+      </div>
+      <button
+        type="submit"
+        disabled={status === "loading"}
+        className="w-full border-brut bg-pink text-white font-display px-4 py-3 shadow-brut-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+      >
+        <Send className="w-4 h-4" />
+        {status === "loading" ? "SENDING…" : "SEND MESSAGE"}
+      </button>
+      {status === "success" && (
+        <p className="font-mono-ui text-xs text-navy bg-yellow border-2 border-navy px-3 py-2">
+          ✓ Got it — we'll be in touch.
+        </p>
+      )}
+      {status === "error" && (
+        <p className="font-mono-ui text-xs text-white bg-pink border-2 border-navy px-3 py-2">
+          ✗ {errorMsg || "Could not send. Try again."}
+        </p>
+      )}
+    </form>
   );
 }
 
@@ -325,8 +428,7 @@ function Footer() {
         </div>
         <div>
           <div className="font-mono-ui text-xs text-yellow mb-4">REACH OUT</div>
-          <p className="text-sm text-cream/70">hello@lgbtards.in</p>
-          <p className="text-sm text-cream/70 mt-1">Legal & Cyber Help: legal@lgbtards.in</p>
+          <ContactForm />
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-cream/20 flex flex-wrap justify-between gap-4 text-xs font-mono-ui text-cream/60">
@@ -338,7 +440,6 @@ function Footer() {
 }
 
 function Index() {
-  // Suppress unused-import warnings for icons used only for semantic clarity
   void Vote;
   return (
     <main className="min-h-screen bg-cream">
