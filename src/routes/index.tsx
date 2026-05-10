@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Shield, Scale, Calendar, Ban, Heart, ArrowRight, Trophy, Vote, Send } from "lucide-react";
-import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import winnerAvatar from "@/assets/winner-avatar.png";
-import { submitContact } from "@/lib/contact.functions";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -320,23 +318,22 @@ function CTA() {
 }
 
 function ContactForm() {
-  const submit = useServerFn(submitContact);
   const [userId, setUserId] = useState("");
   const [concern, setConcern] = useState("");
   const [ageRange, setAgeRange] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
     setErrorMsg("");
     try {
-      await submit({ data: { userId, concern, ageRange } });
+      const subject = encodeURIComponent(`[LGBTards] Concern from ${userId}`);
+      const body = encodeURIComponent(
+        `User ID: ${userId}\nAge Range: ${ageRange}\n\nConcern:\n${concern}`,
+      );
+      window.location.href = `mailto:hello@lgbtards.in?subject=${subject}&body=${body}`;
       setStatus("success");
-      setUserId("");
-      setConcern("");
-      setAgeRange("");
     } catch (err) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
