@@ -1,8 +1,9 @@
-// Vercel Edge Function that delegates to the TanStack Start SSR worker
-// bundle produced at dist/server/index.js by the Cloudflare Vite plugin.
-// Both runtimes use the Web fetch standard, so we can forward Request/Response.
+// Vercel Node Function that delegates to the TanStack Start SSR worker
+// bundle produced at dist/server/index.js. Node runtime is required because
+// the bundle imports node:stream / node:stream/web, which Vercel's Edge
+// runtime does not support.
 
-export const config = { runtime: "edge" };
+export const config = { runtime: "nodejs" };
 
 // @ts-expect-error — resolved at deploy time from the build output
 import worker from "../dist/server/index.js";
