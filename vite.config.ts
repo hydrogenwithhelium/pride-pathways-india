@@ -13,9 +13,22 @@ const edgeStreamWebShim = fileURLToPath(
   new URL("./src/edge-shims/node-stream-web.ts", import.meta.url),
 );
 
+function edgeNodeStreamShimPlugin() {
+  return {
+    name: "edge-node-stream-shim",
+    enforce: "pre" as const,
+    resolveId(source: string) {
+      if (source === "node:stream" || source === "stream") return edgeStreamShim;
+      if (source === "node:stream/web") return edgeStreamWebShim;
+      return undefined;
+    },
+  };
+}
+
 // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
 export default defineConfig({
+  plugins: [edgeNodeStreamShimPlugin()],
   tanstackStart: {
     server: { entry: "server" },
   },
