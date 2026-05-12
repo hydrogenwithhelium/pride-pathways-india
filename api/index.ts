@@ -3,7 +3,7 @@
 // the bundle imports node:stream / node:stream/web, which Vercel's Edge
 // runtime does not support.
 
-export const config = { runtime: "nodejs" };
+export const config = { runtime: "nodejs20.x" };
 
 // @ts-expect-error — resolved at deploy time from the build output
 import worker from "../dist/server/index.js";
