@@ -1,17 +1,4 @@
-const webStreams = globalThis as typeof globalThis & {
-  ByteLengthQueuingStrategy?: typeof ByteLengthQueuingStrategy;
-  CountQueuingStrategy?: typeof CountQueuingStrategy;
-  ReadableByteStreamController?: typeof ReadableByteStreamController;
-  ReadableStreamBYOBReader?: typeof ReadableStreamBYOBReader;
-  ReadableStreamBYOBRequest?: typeof ReadableStreamBYOBRequest;
-  ReadableStreamDefaultController?: typeof ReadableStreamDefaultController;
-  ReadableStreamDefaultReader?: typeof ReadableStreamDefaultReader;
-  TextDecoderStream?: typeof TextDecoderStream;
-  TextEncoderStream?: typeof TextEncoderStream;
-  TransformStreamDefaultController?: typeof TransformStreamDefaultController;
-  WritableStreamDefaultController?: typeof WritableStreamDefaultController;
-  WritableStreamDefaultWriter?: typeof WritableStreamDefaultWriter;
-};
+const webStreams = globalThis as Record<string, unknown>;
 
 export const ReadableStream = webStreams.ReadableStream;
 export const WritableStream = webStreams.WritableStream;
