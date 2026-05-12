@@ -1,0 +1,30 @@
+const webStreams = globalThis as typeof globalThis & {
+  ByteLengthQueuingStrategy?: typeof ByteLengthQueuingStrategy;
+  CountQueuingStrategy?: typeof CountQueuingStrategy;
+  ReadableByteStreamController?: typeof ReadableByteStreamController;
+  ReadableStreamBYOBReader?: typeof ReadableStreamBYOBReader;
+  ReadableStreamBYOBRequest?: typeof ReadableStreamBYOBRequest;
+  ReadableStreamDefaultController?: typeof ReadableStreamDefaultController;
+  ReadableStreamDefaultReader?: typeof ReadableStreamDefaultReader;
+  TextDecoderStream?: typeof TextDecoderStream;
+  TextEncoderStream?: typeof TextEncoderStream;
+  TransformStreamDefaultController?: typeof TransformStreamDefaultController;
+  WritableStreamDefaultController?: typeof WritableStreamDefaultController;
+  WritableStreamDefaultWriter?: typeof WritableStreamDefaultWriter;
+};
+
+export const ReadableStream = webStreams.ReadableStream;
+export const WritableStream = webStreams.WritableStream;
+export const TransformStream = webStreams.TransformStream;
+export const ByteLengthQueuingStrategy = webStreams.ByteLengthQueuingStrategy;
+export const CountQueuingStrategy = webStreams.CountQueuingStrategy;
+export const ReadableByteStreamController = webStreams.ReadableByteStreamController;
+export const ReadableStreamBYOBReader = webStreams.ReadableStreamBYOBReader;
+export const ReadableStreamBYOBRequest = webStreams.ReadableStreamBYOBRequest;
+export const ReadableStreamDefaultController = webStreams.ReadableStreamDefaultController;
+export const ReadableStreamDefaultReader = webStreams.ReadableStreamDefaultReader;
+export const TextDecoderStream = webStreams.TextDecoderStream;
+export const TextEncoderStream = webStreams.TextEncoderStream;
+export const TransformStreamDefaultController = webStreams.TransformStreamDefaultController;
+export const WritableStreamDefaultController = webStreams.WritableStreamDefaultController;
+export const WritableStreamDefaultWriter = webStreams.WritableStreamDefaultWriter;
